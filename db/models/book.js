@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         comment: '가격',
         validate: {
           isEven(value) {
-            if (value < 0) {
+            if (value <= 0) {
               throw new Error('Price must be a postive number');
             }
           }
