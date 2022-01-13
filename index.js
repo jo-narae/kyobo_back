@@ -41,8 +41,8 @@ app.put('/books/:id', async function(req, res) {
 
 app.delete('/books/:id', async function(req, res) {
     await Book.destroy({ id: req.params.id })
-        .then((book) => res.send(book))
-        .catch(err => res.status(500).send(err));
+        .then(() => res.status(200).send({ message: 'It has been successfully deleted.' }))
+        .catch(err => console.log(err));
 });
 
 
