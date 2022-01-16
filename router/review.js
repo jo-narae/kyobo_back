@@ -1,41 +1,40 @@
 const express = require('express');
 const router = express.Router();
 
-const Book = require("../db/query/books");
-const { Review } = require('../db/models');
+const Review = require("../db/query/reviews");
 
 router.get('/', async function(req, res) {
-    await Book.findAll({ include: { model: Review }})
-        .then((books) => {
-            if(!books.length) return res.status(404).send({ err: 'Todo not found' });
-            res.send(books);
+    await Review.findAll()
+        .then((reviews) => {
+            if(!reviews.length) return res.status(404).send({ err: 'Todo not found' });
+            res.send(reviews);
         })
         .catch(err => res.status(500).send(err));
 });
 
 router.get('/:id', async function(req, res) {
-    await Book.findAll({ where: { id: req.params.id } })
-        .then((books) => {
-            if(!books.length) return res.status(404).send({ err: 'Todo not found' });
-            res.send(books);
+    await Review.findAll({ where: { id: req.params.id } })
+        .then((reviews) => {
+            if(!reviews.length) return res.status(404).send({ err: 'Todo not found' });
+            res.send(reviews);
         })
         .catch(err => res.status(500).send(err));
 });
 
 router.post('/', async function(req, res) {
-    await Book.create(req.body)
-        .then((book) => res.send(book))
+    await Review.create(req.body)
+        .then((review) => res.send(review))
         .catch(err => res.status(500).send(err));
 });
 
 router.put('/:id', async function(req, res) {
-    await Book.update({ id: req.params.id, ...req.body })
-        .then((book) => res.send(book))
+    await Review.update({ id: req.params.id, ...req.body })
+        .then((review) => res.send(review))
         .catch(err => res.status(500).send(err));
 });
 
 router.delete('/:id', async function(req, res) {
-    await Book.destroy({ id: req.params.id })
+    await Review.destroy({ id: req.params.id })
         .then(() => res.status(200).send({ message: 'It has been successfully deleted.' }))
         .catch(err => console.log(err));
 });

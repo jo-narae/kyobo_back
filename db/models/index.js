@@ -36,5 +36,10 @@ db.Sequelize = Sequelize;
 
 //모델정보를 읽어온다.
 db.Book = require('./book')(sequelize, Sequelize);
+db.Review = require('./review')(sequelize, Sequelize);
+
+//모델간의 관계를 정의한다.
+db.Book.hasMany(db.Review);
+db.Review.belongsTo(db.Book);
 
 module.exports = db;
